@@ -1,25 +1,46 @@
 <script setup>
+import {ref} from 'vue'
+
+let todos = ref(['A', 'B', 'C'])
+let newTodo = ref('')
+
+function addTodo(){
+  todos.value.push(newTodo.value)
+
+  newTodo.value = ''
+}
+
+function deleteTodo(index){
+  todos.value.splice(index, 1)
+
+}
 
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <h1>My Todo Application</h1>
+  <ul>
+    <li v-for="(todo, index) in todos">
+      
+    <button @click="deleteTodo(index)">🗑️</button>
+   
+    {{ index }}
+    {{ todo }} 
+    </li>
+  </ul>
+  
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    <input v-model="newTodo" @keydown.enter="addTodo">
+    <button @click="addTodo" id="sumbitThing">Add Todo</button>
 
-  <main>
-    <TheWelcome />
-  </main>
 </template>
+
 
 <style scoped>
 header {
   line-height: 1.5;
 }
+
 
 .logo {
   display: block;
@@ -44,3 +65,4 @@ header {
   }
 }
 </style>
+

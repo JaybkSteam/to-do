@@ -5,7 +5,10 @@ let todos = ref(['A', 'B', 'C'])
 let newTodo = ref('')
 
 function addTodo(){
-  todos.value.push(newTodo.value)
+  todos.value.push({
+    text: newTodo.value,
+    complete: false
+  })
 
   newTodo.value = ''
 }
@@ -21,11 +24,12 @@ function deleteTodo(index){
   <h1>My Todo Application</h1>
   <ul>
     <li v-for="(todo, index) in todos">
+      <input type="checkbox" v-model="todo.complete">
       
     <button @click="deleteTodo(index)">🗑️</button>
    
     {{ index }}
-    {{ todo }} 
+    {{ todo.text }} 
     </li>
   </ul>
   

@@ -1,7 +1,7 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 
-let todos = ref(['A', 'B', 'C'])
+let todos = ref(JSON.parse(window.localStorage.getItem('todos')))
 let newTodo = ref('')
 
 function addTodo(){
@@ -17,6 +17,13 @@ function deleteTodo(index){
   todos.value.splice(index, 1)
 
 }
+watch(todos, function(value){
+  console.log(value)
+}, {deep: true})
+
+watch(todos,function(value){
+  window.localStorage.setItem('todos', JSON.stringify(value))
+}, {deep: true})
 
 </script>
 
@@ -40,33 +47,14 @@ function deleteTodo(index){
 </template>
 
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<style>
 
+body  {
+    background: rgb(88,50,108);
+background: linear-gradient(117deg, pink 10%, blue 100%);
+font-family: 'Bruno Ace SC', cursive;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+    min-height: 100vh;
 }
 </style>
 

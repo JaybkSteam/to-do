@@ -1,7 +1,7 @@
 <script setup>
 import {ref, watch} from 'vue'
 
-let todos = ref(JSON.parse(window.localStorage.getItem('todos')))
+let todos = ref(JSON.parse(window.localStorage.getItem('todos')) ??[])
 let newTodo = ref('')
 
 function addTodo(){
@@ -30,7 +30,7 @@ watch(todos,function(value){
 <template>
   <h1>My Todo Application</h1>
   <ul>
-    <li v-for="(todo, index) in todos">
+    <li v-for="(todo, index) in todos" :class="{completed: todo.complete}">
       <input type="checkbox" v-model="todo.complete">
       
     <button @click="deleteTodo(index)">🗑️</button>
@@ -51,10 +51,11 @@ watch(todos,function(value){
 
 body  {
     background: rgb(88,50,108);
-background: linear-gradient(117deg, pink 10%, blue 100%);
+background: linear-gradient(117deg, pink 20%, blue 100%);
 font-family: 'Bruno Ace SC', cursive;
 
     min-height: 100vh;
 }
+
 </style>
 

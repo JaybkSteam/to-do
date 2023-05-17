@@ -25,12 +25,31 @@ watch(todos,function(value){
   window.localStorage.setItem('todos', JSON.stringify(value))
 }, {deep: true})
 
+ let filter = ref('all')
+
+ function todoFilter (todo){
+  if(filter.value =='active'){
+    return todo.complete == false
+  } else if (filter.value == 'completed'){
+    return todo.complete == true
+  } else {
+    return true
+  }
+ }
+
 </script>
 
 <template>
   <h1>My Todo Application</h1>
   <ul>
-    <li v-for="(todo, index) in todos" :class="{completed: todo.complete}">
+    <input name="filter" type="radio" value="all" v-model="filter">
+    <label>All</label>
+
+
+    <input name="filter" type="radio" value="active" v-model="filter">
+    <label>Active</label>
+
+    <li v-for="(todo, index) in todos.filter(todoFilter)" :class="{completed: todo.complete}">
       <input type="checkbox" v-model="todo.complete">
       
     <button @click="deleteTodo(index)">🗑️</button>
@@ -43,6 +62,9 @@ watch(todos,function(value){
 
     <input v-model="newTodo" @keydown.enter="addTodo">
     <button @click="addTodo" id="sumbitThing">Add Todo</button>
+
+   
+    
 
 </template>
 

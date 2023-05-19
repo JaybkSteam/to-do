@@ -37,22 +37,33 @@ watch(todos,function(value){
   }
  }
 
+ function activeFilter (todo){
+  return todo.complete == false       
+ }
+
 </script>
 
 <template>
   <h1>My Todo Application</h1>
-  <ul>
+<p v-if="todos.length > 0">
     <input name="filter" type="radio" value="all" v-model="filter">
     <label>All</label>
 
 
     <input name="filter" type="radio" value="active" v-model="filter">
     <label>Active</label>
-
+    
+    <input name="filter" type="radio" value="completed" v-model="filter">
+    <label>completed</label>
+</p>
+<p>
+  {{ todos.filter(activeFilter).length }} Items Left
+</p>
+    <ul>
     <li v-for="(todo, index) in todos.filter(todoFilter)" :class="{completed: todo.complete}">
       <input type="checkbox" v-model="todo.complete">
       
-    <button @click="deleteTodo(index)">🗑️</button>
+    <button @click="deleteTodo(index)">ⓧ</button>
    
     {{ index }}
     {{ todo.text }} 
@@ -71,13 +82,20 @@ watch(todos,function(value){
 
 <style>
 
+
+
 body  {
     background: rgb(88,50,108);
-background: linear-gradient(117deg, pink 20%, blue 100%);
+background: linear-gradient(117deg, white 20%, blue 100%);
 font-family: 'Bruno Ace SC', cursive;
 
     min-height: 100vh;
 }
+ul{
+  background-color: linear-gradient(117deg, white 20%, blue 100%);
+  border-radius: 15px;
+  
+}
+ul{box-shadow: 5px 10px black;}
 
 </style>
-
